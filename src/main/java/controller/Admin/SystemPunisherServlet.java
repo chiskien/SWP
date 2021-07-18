@@ -17,12 +17,14 @@ import dao.TranslatorDao;
 import entity.Book;
 import entity.Translator;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -41,42 +43,44 @@ public class SystemPunisherServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     TAccountDao accDao = new TAccountDao();
-    TTranslator transDao =  new TTranslator();
+    TTranslator transDao = new TTranslator();
     BookDao bookDao = new BookDao();
     TBookDao tbookDao = new TBookDao();
     NotificationDao noDao = new NotificationDao();
     TReportDao reDao = new TReportDao();
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Report> punishList = (List<Report>) request.getAttribute("violationList");
-        String page = request.getAttribute("RequestUrl").toString();
-        for(Report temp:punishList)
-        {
-            switch(temp.getType())
-            {
-                case "comment":
-                    int accId=new TComment().GetOneByReport(temp).getAccount().getAccountId();
-                    accDao.punishAccount(accId);
-                    String commentpenalty = "you have been penalized for breaking the rules of the site in a comment on " +
-                            (new TComment().GetOneByReport(temp).getPostTime()).toString();
-                    noDao.addNoti(accId, commentpenalty, "user");
-                    break;
-                case "book":
-                    Book boo = bookDao.getOne(temp.getBookId());
-                    tbookDao.removeBook(boo);
-                    Translator trans = new TranslatorDao().getOneWithBookId(boo.getId());
-                    transDao.punishTranslator(trans);
-                    String bookPenalty = "you have been penalized for breaking the rules of the site in the book :"+
-                            boo.getName();
-                    noDao.addNoti(trans.getTranslatorId(), bookPenalty, "translator");
-                    break;
-                default:
-                    String penaltyNoti ="you have been penalized for breaking the rules of the site based on report from others user";
-                    break;
-            }      
+        int aid = Integer.valueOf(request.getParameter("aid"));
+        Report temp = reDao.getById(aid);
+        switch (temp.getType()) {
+            case "comment":
+                int accId = new TComment().GetOneByReport(temp).getAccount().getAccountId();
+                accDao.punishAccount(accId);
+                String commentpenalty = "you have been penalized for breaking the rules of the site in a comment on "
+                        + (new TComment().GetOneByReport(temp).getPostTime()).toString();
+                noDao.addNoti(accId, commentpenalty, "user");
+                break;
+            case "book":
+                Book boo = bookDao.getOne(temp.getBookId());
+                tbookDao.removeBook(boo);
+                Translator trans = new TranslatorDao().getOneWithBookId(boo.getId());
+                transDao.punishTranslator(trans);
+                String bookPenalty = "you have been penalized for breaking the rules of the site in the book :"
+                        + boo.getName();
+                noDao.addNoti(trans.getTranslatorId(), bookPenalty, "translator");
+                break;
+            default:
+                String penaltyNoti = "you have been penalized for breaking the rules of the site based on report from others user";
+                break;
         }
-        reDao.changeReportStatrToDone(punishList);
-        request.getRequestDispatcher(page).forward(request, response);
+//        String type = "Report";
+        reDao.changeReportStatrToDone(temp);
+//        HttpSession session = request.getSession();
+//        session.setMaxInactiveInterval(2400);
+//        session.setAttribute("type", type);
+        request.getRequestDispatcher("TableServlet/Report").forward(request, response);
+        //response.sendRedirect("/myConnectDB/adminPage.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

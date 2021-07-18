@@ -38,7 +38,7 @@ public class NotificationDao {
         return check > 0;
     }
     public List<Notification> getAllWithAccount(int accountId){
-        String query = "SELECT * FROM notifications WHERE receiverId = ?";
+        String query = "SELECT * FROM notifications WHERE receiverId = ? order by NotificationID desc";
         int check = 0;
         try (Connection cn = SQLServerConnection.GetConnection();
                 PreparedStatement ps = cn.prepareStatement(query)) {

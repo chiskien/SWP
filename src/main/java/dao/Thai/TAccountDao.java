@@ -130,7 +130,7 @@ public class TAccountDao {
             int check =0;
             try (Connection cn = SQLServerConnection.GetConnection();
                 PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setObject(2, accId);
+            ps.setObject(1, accId);
             check = ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

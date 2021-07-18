@@ -71,7 +71,6 @@
                             <span>Toggle Sidebar</span>
                         </button>
                         <button type="button" id="" class="btn btn-info" onclick="myFunction3()">
-                            <i class="fas fa-align-left"></i>
                             <span>New Notification</span>
                             <i class="far fa-comment-dots"></i>
                         </button>
@@ -111,23 +110,23 @@
                         <form action="NotificationSender">
                             <div class="hmodal-body">
                                 <p style="display: inline;">Receiver: </p>
-                                
+
                                 <select name="account">
                                     <option value="100">All Account</option>
                                     <option value="0">Not select</option>
-                                    <% for(Account a : accs){ %>
-                                        <option value=<%= a.getAccountId() %>><%= a.getName()%></option>
+                                    <% for (Account a : accs) {%>
+                                    <option value=<%= a.getAccountId()%>><%= a.getName()%></option>
                                     <%}%>
                                 </select>
-                                
+
                                 <select name="translator">
                                     <option value="100">All Translator</option>
                                     <option value="0">Not select</option>
-                                    <% for(Translator t : trans ){ %>
-                                        <option value=<%= t.getTranslatorId()%>><%= t.getName()%></option>
+                                    <% for (Translator t : trans) {%>
+                                    <option value=<%= t.getTranslatorId()%>><%= t.getName()%></option>
                                     <%}%>
                                 </select>
-                                
+
                                 <p style="display: block;"></p>
                                 <p style="display: inline;">Content: </p> 
                                 <p style="display: block;"></p>
@@ -218,7 +217,7 @@
                         <div class="hmodal-content">
                             <div class="hmodal-header">
                                 <span class="close">&times;</span>
-                                <h2>Modal Header</h2>
+                                <h2>Account</h2>
                             </div>
                             <div class="hmodal-body">
                                 <p id="a"></p>
@@ -228,7 +227,7 @@
                                 <p id="e"></p>
                             </div>
                             <div class="hmodal-footer">
-                                <h3>Modal Footer</h3>
+                                <h3></h3>
                             </div>
                         </div>
                     </div>
@@ -238,7 +237,7 @@
                         <div class="hmodal-content">
                             <div class="hmodal-header">
                                 <span class="close2">&times;</span>
-                                <h2>Modal Header</h2>
+                                <h2>Account</h2>
                             </div>
                             <form action="EditServlet/Account">
                                 <div class="hmodal-body">
@@ -337,6 +336,7 @@
                             <th scope="col">Comment ID</th>
                             <th scope="col">Content</th>
                             <th scope="col">Status</th>
+                            <th scope="col">Action</th>
                         </tr>
                     <tbody>
                         <% for (int i = 0; i < list.size(); i++) {
@@ -360,13 +360,29 @@
                             <td onclick="myFunction('<%=list.get(i).getReportId()%>', '<%=list.get(i).getAccountId()%>', '<%=list.get(i).getBookId()%>', '<%=list.get(i).getCommentId()%>', '<%=list.get(i).getContent()%>', '<%=list.get(i).getStatus()%>')">
                                 <%=list.get(i).getStatus()%>
                             </td> 
+                            <% if(list.get(i).getStatus() == 1) {%>
+                            <td>
+                                <a href="ServletReportDetail?aid=<%=list.get(i).getReportId()%>" >
+                                <button type="button" id="" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Pass">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                </a>
+                                <a href="SystemPunisherServlet?aid=<%=list.get(i).getReportId()%>" >
+                                <button type="button" id="" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Ban">
+                                    <i class="fas fa-ban"></i>
+                                </button>
+                                </a>
+                            </td>
+                            <%} else {%>
+                            <td></td>
+                            <%}%>
                         </tr>
                     <div id="myModal" class="hmodal" style="text-align: left;">
                         <!-- Modal content -->
                         <div class="hmodal-content">
                             <div class="hmodal-header">
                                 <span class="close">&times;</span>
-                                <h2>Modal Header</h2>
+                                <h2>Report</h2>
                             </div>
                             <div class="hmodal-body">
                                 <p id="a"></p>
@@ -377,7 +393,7 @@
                                 <p id="f"></p>
                             </div>
                             <div class="hmodal-footer">
-                                <h3>Modal Footer</h3>
+                                <h3></h3>
                             </div>
                         </div>
                     </div>
@@ -478,7 +494,7 @@
                         <div class="hmodal-content">
                             <div class="hmodal-header">
                                 <span class="close">&times;</span>
-                                <h2>Modal Header</h2>
+                                <h2>Book</h2>
                             </div>
                             <div class="hmodal-body">
                                 <p id="a"></p>
@@ -493,7 +509,7 @@
                                 <p id="k"></p>
                             </div>
                             <div class="hmodal-footer">
-                                <h3>Modal Footer</h3>
+                                <h3></h3>
                             </div>
                         </div>
                     </div>
@@ -503,7 +519,7 @@
                         <div class="hmodal-content">
                             <div class="hmodal-header">
                                 <span class="close2">&times;</span>
-                                <h2>Modal Header</h2>
+                                <h2>Book</h2>
                             </div>
                             <form action="EditServlet/Book">
                                 <div class="hmodal-body">
@@ -652,18 +668,24 @@
                         <div class="hmodal-content">
                             <div class="hmodal-header">
                                 <span class="close">&times;</span>
-                                <h2>Modal Header</h2>
+                                <h2>Translator</h2>
                             </div>
                             <div class="hmodal-body">
-                                <p id="a"></p>
-                                <p id="b"></p>
-                                <p id="c"></p>
-                                <p id="d"></p>
-                                <p id="e"></p>
-                                <p id="f"></p>
+                                <p style="display: inline;">ID: </p><p id="a"></p>
+                                <p style="display: block;"></p>
+                                <p style="display: inline;">Name: </p><p id="b"></p>
+                                <p style="display: block;"></p>
+                                <p style="display: inline;">Link Fanpage: </p><p id="c"></p>
+                                <p style="display: block;"></p>
+                                <p style="display: inline;">Donation Account: </p><p id="d"></p>
+                                <p style="display: block;"></p>
+                                <p style="display: inline;">Image Name: </p><p id="e"></p>
+                                <p style="display: block;"></p>
+                                <p style="display: inline;">Status: </p><p id="f"></p>
+                                <p></p>
                             </div>
                             <div class="hmodal-footer">
-                                <h3>Modal Footer</h3>
+                                <h3></h3>
                             </div>
                         </div>
                     </div>
@@ -673,7 +695,7 @@
                         <div class="hmodal-content">
                             <div class="hmodal-header">
                                 <span class="close2">&times;</span>
-                                <h2>Modal Header</h2>
+                                <h2>Translator</h2>
                             </div>
                             <form action="EditServlet/Translator">
                                 <div class="hmodal-body">

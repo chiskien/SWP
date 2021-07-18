@@ -72,17 +72,17 @@ public class TBookDao {
    
      public boolean removeBook(Book book)
      {
-         String query = "UPDATE book SET"
-                 + "appear = 0"
-                 + "WHERE id = ?";
-         int check =0;
-         try (Connection cn = SQLServerConnection.GetConnection();
-                PreparedStatement ps = cn.prepareStatement(query)) {
-            ps.setInt(1, book.getId());
-            check = ps.executeUpdate();
-        } catch (SQLException ex) {
+        String query ="UPDATE book SET appear = 1 WHERE id = ?";
+        int check =0;
+        try(Connection conn = SQLServerConnection.GetConnection();
+            PreparedStatement ps = conn.prepareStatement(query);){
+        ps.setInt(1, book.getId());
+        check=ps.executeUpdate();
+            
+        }catch(SQLException ex)
+        {
             ex.printStackTrace();
         }
-        return check > 0;
-     }
+        return check>0;
+    }
 }

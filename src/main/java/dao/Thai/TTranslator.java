@@ -52,7 +52,7 @@ public class TTranslator {
     public boolean punishTranslator(Translator trans)
     {
         String query ="UPDATE translator SET "
-                + "status =0"
+                + "status =1"
                 + "WHERE translatorId =?";
         int check =0;
         try(Connection conn = SQLServerConnection.GetConnection();

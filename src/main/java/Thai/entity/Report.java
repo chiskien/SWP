@@ -37,6 +37,5 @@ public class Report {
         this.status = status;
         this.type = type;
     }
-
     
 }

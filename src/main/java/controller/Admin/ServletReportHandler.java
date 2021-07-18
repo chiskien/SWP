@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -34,15 +35,10 @@ public class ServletReportHandler extends HttpServlet {
     TReportDao reDao = new TReportDao();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Report> innocent = (List<Report>) request.getAttribute("innocentList");
-        String page = request.getRequestURL().toString();
-        reDao.changeReportStatrToDone(innocent);
-        if(request.getAttribute("violationList")!=null)
-        {
-            request.setAttribute("RequestUrl", page);
-            page = "SystemPunisherServlet";
-        }
-        request.getRequestDispatcher(page).forward(request, response);
+        int aid = Integer.valueOf(request.getParameter("aid"));
+        Report temp = reDao.getById(aid);
+        reDao.changeReportStatrToDone(temp);
+        request.getRequestDispatcher("TableServlet/Report").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

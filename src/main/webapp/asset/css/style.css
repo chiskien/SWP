@@ -454,8 +454,7 @@ form {
 
 .bookDetail-section {
   position: relative;
-  margin: auto;
-  margin-top: 30px;
+  margin: 30px auto auto;
   width: 80%;
   height: 95%;
   border: 1px solid #fff;
@@ -996,6 +995,7 @@ details p {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   z-index: 999999999999999;
   background-color: white;
+  overflow-y: auto
 }
 
 .notifi-box h2 {
