@@ -113,7 +113,7 @@ class BookDetailServletTest {
         assertNotNull(listCategories);
         assertNotNull(lsChapter);
         assertNotNull(lsComment);
-        assertTrue(isFollowed);
+        assertFalse(isFollowed);
         assertNotNull(lsBookWithTranslator);
     }
 }

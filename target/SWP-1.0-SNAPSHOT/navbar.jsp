@@ -42,12 +42,11 @@
                                 <div class="notifi-item">
                                 <img src="https://p.kindpng.com/picc/s/78-785827_user-profile-avatar-login-account-male-user-icon.png" alt="img">
                                 <div class="text">
-                                    <h4>Test Name</h4>
+<%--                                    <h4>Test Name</h4>--%>
                                     <p>${noti.content}</p>
                                 </div>
                             </div>
                             </c:forEach>
-                            
                         </div>
                     </li>
                 </ul>
@@ -130,6 +129,12 @@
                                     <i class="fa fa-bookmark"></i> Following</a
                                 >
                             </li>
+<%--                        <@ if (${sessionScope.}--%>
+<%--                            <li>--%>
+<%--                                <a href="ChartController">--%>
+<%--                                    <i class="fa fa-bookmark"></i> Admin Page</a>--%>
+<%--                            </li>--%>
+
                             <li class="divider"></li>
                             <li><a href="LogoutServlet">Log Out</a></li>
                         </ul>

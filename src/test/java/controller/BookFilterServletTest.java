@@ -1,25 +1,23 @@
 package controller;
 
-import dao.*;
-import dao.hoang_dao.FollowDao;
-import entity.*;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class BookFilterServletTest {
 
-    BookDetailServlet bookDetailServlet;
-    private static final String path = "bookFilter.jsp";
     @Mock
     HttpServletResponse response;
     @Mock
@@ -29,16 +27,15 @@ class BookFilterServletTest {
     @Mock
     RequestDispatcher dispatcher;
 
-
+    BookFilterServlet filterServlet  = new BookFilterServlet();
     @BeforeEach
     void setUp() {
-        request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
-        dispatcher = mock(RequestDispatcher.class);
+        request = mock(HttpServletRequest.class);
         session = mock(HttpSession.class);
-        bookDetailServlet = new BookDetailServlet();
+        dispatcher = mock(RequestDispatcher.class);
         when(request.getSession()).thenReturn(session);
-        when(request.getRequestDispatcher(path)).thenReturn(dispatcher);
+
     }
 
     @AfterEach
@@ -46,97 +43,52 @@ class BookFilterServletTest {
     }
 
     @Test
-//Test case 1
-    void processRequestTest1() throws ServletException, IOException {
-        when(request.getParameter("id")).thenReturn("1");
-        when(session.getAttribute("accountId")).thenReturn(21);
-
-        bookDetailServlet.processRequest(request, response);
-
-        verify(request, times(1)).getRequestDispatcher(path);
-        verify(dispatcher).forward(request, response);
+    void processRequest() throws ServletException, IOException {
+        String path = "error.jsp";
+        when(request.getParameter("status")).thenReturn("Break");
+        String[] cate = {"Anime", "Shonen","Isekai"};
+        when(request.getParameterValues("categories")).thenReturn(cate);
+        when(request.getRequestDispatcher(path)).thenReturn(dispatcher);
+        when(request.getParameter("Sort")).thenReturn("A-Z");
+        filterServlet.processRequest(request,response);
+        verify(response).sendRedirect(path);
     }
-
     @Test
-//Test case 1
-    void processRequestTest2() throws ServletException, IOException {
-        when(request.getParameter("id")).thenReturn("1");
-        when(session.getAttribute("accountId")).thenReturn(0);
+    void processRequest2() throws ServletException, IOException {
+        String path = "bookFilter.jsp";
+        when(request.getParameter("status")).thenReturn("break");
+        String[] cate = {"Action", "Comedy","Adventures"};
+        when(request.getParameterValues("categories")).thenReturn(cate);
+        when(request.getRequestDispatcher(path)).thenReturn(dispatcher);
+        when(request.getParameter("Sort")).thenReturn("A-Z");
+        filterServlet.processRequest(request,response);
 
-        bookDetailServlet.processRequest(request, response);
-
-        verify(request, times(1)).getRequestDispatcher(path);
-        verify(dispatcher).forward(request, response);
+        verify(request).getRequestDispatcher(path);
+        verify(dispatcher).forward(request,response);
     }
-
     @Test
-    void processRequestTest4() {
-        when(request.getParameter("id")).thenReturn("1");
-        when(session.getAttribute("accountId")).thenReturn(0);
+    void processRequest3() throws ServletException, IOException {
+        String path = "bookFilter.jsp";
+        when(request.getParameter("status")).thenReturn("break");
+        String[] cate = {"Action", "Comedy","Adventures"};
+        when(request.getParameterValues("categories")).thenReturn(cate);
+        when(request.getRequestDispatcher(path)).thenReturn(dispatcher);
+        when(request.getParameter("Sort")).thenReturn("Most View");
+        filterServlet.processRequest(request,response);
 
-        int id = Integer.parseInt(request.getParameter("id"));
-        int accountId = (int) session.getAttribute("accountId");
-
-        Book a = new BookDao().getOne(id);
-        List<Category> listCategories = new CategoryDao().getAllWithBookId(id);
-        List<Chapter> lsChapter = new ChapterDao().getAllWithBookId(id);
-        List<Comment> lsComment = new CommentDao().getAllWithBookId(id);
-        boolean isFollowed = FollowDao.getFollowOrNot(id, accountId);
-        Translator translator = new TranslatorDao().getOneWithBookId(id);
-        List<Book> lsBookWithTranslator = new BookDao().getAllWithTranslatorId(translator.getTranslatorId());
-
-
-        assertNotNull(listCategories);
-        assertNotNull(lsChapter);
-        assertNotNull(lsComment);
-        assertFalse(isFollowed);
-        assertNotNull(lsBookWithTranslator);
+        verify(request,times(1)).getRequestDispatcher(path);
+        verify(dispatcher).forward(request,response);
     }
-
     @Test
-    void processRequestTest5() {
-        when(request.getParameter("id")).thenReturn("1");
-        when(session.getAttribute("accountId")).thenReturn(21);
+    void processRequest4() throws ServletException, IOException {
+        String path = "error.jsp";
+        when(request.getParameter("status")).thenReturn("break");
+        String[] cate = {"Action", "Comedy","Adventures"};
+        when(request.getParameterValues("categories")).thenReturn(cate);
+        when(request.getRequestDispatcher(path)).thenReturn(dispatcher);
+        when(request.getParameter("Sort")).thenReturn("A-Z");
+        filterServlet.processRequest(request,response);
 
-        int id = Integer.parseInt(request.getParameter("id"));
-        int accountId = (int) session.getAttribute("accountId");
-
-        Book a = new BookDao().getOne(id);
-        List<Category> listCategories = new CategoryDao().getAllWithBookId(id);
-        List<Chapter> lsChapter = new ChapterDao().getAllWithBookId(id);
-        List<Comment> lsComment = new CommentDao().getAllWithBookId(id);
-        boolean isFollowed = FollowDao.getFollowOrNot(id, accountId);
-        Translator translator = new TranslatorDao().getOneWithBookId(id);
-        List<Book> lsBookWithTranslator = new BookDao().getAllWithTranslatorId(translator.getTranslatorId());
-
-        assertNotNull(listCategories);
-        assertNotNull(lsChapter);
-        assertNotNull(lsComment);
-        assertTrue(isFollowed);
-        assertNotNull(lsBookWithTranslator);
+        verify(response).sendRedirect(path);
     }
-
-    @Test
-    void processRequestTest6() {
-        when(request.getParameter("id")).thenReturn("13435");
-        when(session.getAttribute("accountId")).thenReturn(0);
-
-        int id = Integer.parseInt(request.getParameter("id"));
-        int accountId = (int) session.getAttribute("accountId");
-
-        Book a = new BookDao().getOne(id);
-        List<Category> listCategories = new CategoryDao().getAllWithBookId(id);
-        List<Chapter> lsChapter = new ChapterDao().getAllWithBookId(id);
-        List<Comment> lsComment = new CommentDao().getAllWithBookId(id);
-        boolean isFollowed = FollowDao.getFollowOrNot(id, accountId);
-        Translator translator = new TranslatorDao().getOneWithBookId(id);
-        List<Book> lsBookWithTranslator = new BookDao().getAllWithTranslatorId(translator.getTranslatorId());
-
-        assertNull(listCategories);
-        assertNull(lsChapter);
-        assertNull(lsComment);
-        assertFalse(isFollowed);
-        assertNull(lsBookWithTranslator);
-    }
-
 }

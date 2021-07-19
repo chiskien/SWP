@@ -1,4 +1,3 @@
-<jsp:useBean id="book" scope="request" type="javax.enterprise.inject.spi.PassivationCapable"/>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -107,20 +106,50 @@
                                         </span>
                             </button>
 
+                            <button type="button" class="action-follow" style="margin-left: 15px"
+                                    onclick="setClipboard()" data-toggle="popover" data-placement="top"
+                                    data-content="Copied Comic's Link">
+                                <i class="fas fa-share"></i>
+                            </button>
+                            <script>
+                                function setClipboard() {
+                                    var tempInput = document.createElement("input");
+                                    tempInput.style = "position: absolute; left: -1000px; top: -1000px";
+                                    tempInput.value = window.location.href;
+                                    document.body.appendChild(tempInput);
+                                    tempInput.select();
+                                    document.execCommand("copy");
+                                    document.body.removeChild(tempInput);
+                                }
+                            </script>
                             <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                 Report this book!
                             </button>
                             <div class="dropdown-menu book-report">
                                 <div class="book-report-content" style="display:none"></div>
-                                <div class="dropdown-item">Abusive content</div>
-                                <div class="dropdown-item">Plagiarism</div>
-                                <div class="dropdown-item">Erotic content</div>
-                                <div class="dropdown-item">Hate speech</div>
-
+                                <div class="dropdown-item">
+                                    <a href="ReportServlet?id=${requestScope.book.id}&accountId=${sessionScope.accountId}&content=AbusiveContent&status=1&type=book">
+                                        Abusive content
+                                    </a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="ReportServlet?id=${requestScope.book.id}&accountId=${sessionScope.accountId}&content=Plagiarism&status=1&type=book">
+                                        Plagiarism
+                                    </a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="ReportServlet?id=${requestScope.book.id}&accountId=${sessionScope.accountId}&content=EroticContent&status=1&type=book">
+                                        Erotic content
+                                    </a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="ReportServlet?id=${requestScope.book.id}&accountId=${sessionScope.accountId}&content=HateSpeech&status=1&type=book">
+                                        Hate speech
+                                    </a>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="action-2">
                         <div class="read-first">
@@ -177,6 +206,7 @@
         </div>
 
     </div>
+</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="asset/js/bootstrap.js"></script>

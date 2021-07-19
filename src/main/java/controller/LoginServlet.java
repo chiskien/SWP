@@ -70,6 +70,8 @@ public class LoginServlet extends HttpServlet {
                     }
                    if(acc.getRole()==2){
                        request.getRequestDispatcher("PublisherAddChapter?accountId="+acc.getAccountId()).forward(request, response);
+                   } else if(acc.getRole()==3){
+                        response.sendRedirect("ChartController");
                    }
                     response.sendRedirect("BookServlet");
                 }

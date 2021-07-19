@@ -85,8 +85,24 @@ public class TReportDao {
         }
         return false;
     }
-
-    public void reportBook(int accountId, int bookId, int commentId,
+    public void reportBook(int accountId, int bookId,
+                           String content, int status, String type) {
+        String sql = "INSERT INTO report([accountId],[bookId]," +
+                "[content],[status],[type]) values (?,?,?,?,?)";
+        try (Connection connection = SQLServerConnection.GetConnection()) {
+            assert connection != null;
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, accountId);
+            ps.setInt(2, bookId);
+            ps.setString(3, content);
+            ps.setInt(4, status);
+            ps.setString(5, type);
+            ps.executeUpdate();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+    }
+    public void reportComment(int accountId, int bookId,int commentId,
                            String content, int status, String type) {
         String sql = "INSERT INTO report([accountId],[bookId],[commentId]," +
                 "[content],[status],[type]) values (?,?,?,?,?,?)";

@@ -47,7 +47,7 @@
                                 </div>
                             </div>
                             </c:forEach>
-                            
+
                         </div>
                     </li>
                 </ul>
