@@ -61,7 +61,7 @@ and open the template in the editor.
             <!-- Sidebar  -->
             <nav id="sidebar">
                 <div class="sidebar-header">
-                    <h3>BROMICS</h3>
+                    <a href="BookServlet"><h3>BROMICS</h3></a>
                 </div>
 
                 <ul class="list-unstyled components">

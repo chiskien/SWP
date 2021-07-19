@@ -7,6 +7,7 @@ package controller.Admin;
 
 import Thai.entity.Report;
 import dao.BookDao;
+import dao.CommentDao;
 import dao.NotificationDao;
 import dao.Thai.TAccountDao;
 import dao.Thai.TBookDao;
@@ -48,7 +49,7 @@ public class SystemPunisherServlet extends HttpServlet {
     TBookDao tbookDao = new TBookDao();
     NotificationDao noDao = new NotificationDao();
     TReportDao reDao = new TReportDao();
-
+    CommentDao cmtDao = new CommentDao();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int aid = Integer.valueOf(request.getParameter("aid"));
@@ -60,6 +61,7 @@ public class SystemPunisherServlet extends HttpServlet {
                 String commentpenalty = "you have been penalized for breaking the rules of the site in a comment on "
                         + (new TComment().GetOneByReport(temp).getPostTime()).toString();
                 noDao.addNoti(accId, commentpenalty, "user");
+                cmtDao.remove(temp.getCommentId());
                 break;
             case "book":
                 Book boo = bookDao.getOne(temp.getBookId());

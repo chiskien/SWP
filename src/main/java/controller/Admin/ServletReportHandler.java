@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author thaip
  */
-@WebServlet(name = "ServletReportDetail", urlPatterns = {"/ServletReportDetail"}) //ngu
+@WebServlet(name = "ServletReportDetail", urlPatterns = {"/ServletReportDetail"})
 public class ServletReportHandler extends HttpServlet {
 
     /**
@@ -35,7 +35,7 @@ public class ServletReportHandler extends HttpServlet {
     TReportDao reDao = new TReportDao();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int aid = Integer.parseInt(request.getParameter("aid"));
+        int aid = Integer.valueOf(request.getParameter("aid"));
         Report temp = reDao.getById(aid);
         reDao.changeReportStatrToDone(temp);
         request.getRequestDispatcher("TableServlet/Report").forward(request, response);

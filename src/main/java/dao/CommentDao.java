@@ -66,4 +66,18 @@ public class CommentDao {
         }
         return check > 0;
     }
+    
+    public boolean remove(int id) {
+        String query = "DELETE FROM comment WHERE commentId = ?";
+        int check = 0;
+        try(Connection cn = SQLServerConnection.GetConnection();
+                PreparedStatement ps = cn.prepareStatement(query)){
+            ps.setInt(1, id);
+            check = ps.executeUpdate();
+        }
+        catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return check > 0;
+    }
 }

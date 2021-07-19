@@ -72,17 +72,19 @@ public class TAccountDao {
     }
     
     public void updateAccount(Account ac){
-        String sql ="UPDATE account \n"
-                + "SET name = ?,"
-                + "email    = ?,"
-                + "[role]     = ?\n"
+        String sql ="UPDATE account "
+                + "SET name = ?, "
+                + "email    = ?, "
+                + "status     = ?, "
+                + "[role]     = ? "
                 + "WHERE accountId =?";
         try(Connection conn = SQLServerConnection.GetConnection();
             PreparedStatement ps = conn.prepareStatement(sql);){
             ps.setString(1, ac.getName());
             ps.setString(2, ac.getEmail());
-            ps.setInt(3, ac.getRole());
-            ps.setInt(4, ac.getAccountId());
+            ps.setInt(3, ac.getStatus());
+            ps.setInt(4, ac.getRole());
+            ps.setInt(5, ac.getAccountId());
             ps.executeUpdate();
         }catch(SQLException ex)
         {
@@ -124,9 +126,7 @@ public class TAccountDao {
         
         public boolean punishAccount(int accId)
         {
-            String sql ="UPDATE account SET"
-                    + "status = 0"
-                    + "WHERE accountId = ?";
+            String sql ="UPDATE account SET status = 0 WHERE accountId = ?";
             int check =0;
             try (Connection cn = SQLServerConnection.GetConnection();
                 PreparedStatement ps = cn.prepareStatement(sql)) {

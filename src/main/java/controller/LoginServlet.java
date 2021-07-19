@@ -40,10 +40,10 @@ public class LoginServlet extends HttpServlet {
             String mail = request.getParameter("email");
             String pass = request.getParameter("password");
             Account acc = new AccountDao().login(mail, pass);
-            
+
             System.out.println(mail);
             if (acc != null) {
-                
+
                 if (acc.getStatus() == 2) {
                     request.setAttribute("message", "Your account has not been activated");
                     request.setAttribute("email", mail);
@@ -60,6 +60,7 @@ public class LoginServlet extends HttpServlet {
                     HttpSession session = request.getSession();
                     session.setAttribute("user", acc.getName());
                     session.setAttribute("accountId", acc.getAccountId());
+                    session.setAttribute("role",acc.getRole());
                     if (request.getParameter("remember") != null) {
                         Cookie c = new Cookie("email", mail);
                         c.setMaxAge(3600 * 24 * 30);
@@ -68,11 +69,11 @@ public class LoginServlet extends HttpServlet {
                         response.addCookie(c);
                         response.addCookie(c2);
                     }
-                   if(acc.getRole()==2){
-                       request.getRequestDispatcher("PublisherAddChapter?accountId="+acc.getAccountId()).forward(request, response);
-                   } else if(acc.getRole()==3){
-                        response.sendRedirect("ChartController");
-                   }
+                    if(acc.getRole()==2){
+                        request.getRequestDispatcher("PublisherAddChapter?accountId="+acc.getAccountId()).forward(request, response);
+                    } else if(acc.getRole()==3){
+                        request.getRequestDispatcher("ChartController").forward(request,response);
+                    }
                     response.sendRedirect("BookServlet");
                 }
             } else {

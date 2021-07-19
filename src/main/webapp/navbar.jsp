@@ -47,7 +47,6 @@
                                 </div>
                             </div>
                             </c:forEach>
-
                         </div>
                     </li>
                 </ul>
@@ -127,9 +126,23 @@
                             </li>
                             <li>
                                 <a href="UserFollowServlet?accountId=${sessionScope.accountId}">
-                                    <i class="fa fa-bookmark"></i> Following</a
+                                    <i class="fa fa-heart"></i> Following</a
                                 >
                             </li>
+                            <c:if test="${sessionScope.role==3}">
+                            <li>
+                                <a href="ChartController">
+                                    Switch to admin</a
+                                >
+                            </li>
+                            </c:if>
+                            <c:if test="${sessionScope.role==2}">
+                            <li>
+                                <a href="ChartController">
+                                    Switch to admin</a
+                                >
+                            </li>
+                            </c:if>
                             <li class="divider"></li>
                             <li><a href="LogoutServlet">Log Out</a></li>
                         </ul>
