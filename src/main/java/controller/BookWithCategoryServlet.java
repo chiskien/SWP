@@ -44,22 +44,16 @@ public class BookWithCategoryServlet extends HttpServlet {
             int categoryId = Integer.parseInt(request.getParameter("categoryId"));
             List<Book> listBook = new BookDao().getAllWithCategoryId(categoryId);
             List<Category> lsCategory = new CategoryDao().getAll();
-            List<History> lsHistory = new HistoryDao().getBook_DateHistoryWithAccountId(1);
-            int bookIdArray [] = new int [lsHistory.size()];
-            for(History i: lsHistory){
-                bookIdArray[lsHistory.indexOf(i)] = i.getBookId();
-            }
-            List<Book> lsBookHistory = new BookDao().getAllWithIds(bookIdArray);
+
 //            ls.forEach(System.out::println);
             List<Book> lsBookTopView = new BookDao().getTopView();
             List<Category> filterCategory = new ArrayList();
             filterCategory.add(new CategoryDao().getOne(categoryId));
             request.setAttribute("lsTopView", lsBookTopView);
-            request.setAttribute("lsHistory", lsHistory);
             request.setAttribute("data", listBook);
             request.setAttribute("lsCategory", lsCategory);
             request.setAttribute("account", request.getAttribute("account"));
-            request.setAttribute("lsBookHistory",lsBookHistory);
+
             request.setAttribute("filterCategory",filterCategory);
             request.getRequestDispatcher("bookFilter.jsp").forward(request, response);
         } catch (Exception ex) {

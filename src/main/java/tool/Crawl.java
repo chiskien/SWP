@@ -60,7 +60,7 @@ public class Crawl {
                 joiner.add(s);
             }
             String hoang = joiner.toString();
-            System.out.println(hoang);
+
             boolean check = false;
             for (String s : lsb) {
                 if (s.equals(hoang)) {

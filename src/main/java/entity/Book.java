@@ -76,6 +76,11 @@ public class Book {
         this.bookmarkedChapter = bookmarkedChapter;
         this.bookmarkedChapterId = bookmarkedChapterId;
     }
+    public Book(int id, String name,int totalFollow) {
+        this.id = id;
+        this.name = name;
+        this.totalFollow = totalFollow;
+    }
     
     public List<Category> getAllCategory(){
         List<Category> ls = new CategoryDao().getAllWithBookId(id);

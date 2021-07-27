@@ -29,8 +29,6 @@ public class FollowDao {
                 if(rs.next()){
                     return rs.getInt("count");
             }
-                
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

@@ -102,14 +102,13 @@
           <div class="section-today">
             <h3>
               <i class="fa fa-bomb" style="font-size: 36px; color: red"></i>
-              Most Favorite
+              Most View
             </h3>
             <div class="row">
               <c:forEach
                 items="${requestScope.lsTopView}"
                 var="book"
-                varStatus="count"
-              >
+                varStatus="count">
                 <c:if test="${book.appear==0}">
                   <div class="example-1 card">
                     <div class="wrapper">

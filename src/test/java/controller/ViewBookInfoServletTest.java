@@ -1,7 +1,6 @@
 package controller;
 
-import dao.hoang_dao.FollowDao;
-import dao.hoang_dao.HBookMarkDao;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -19,8 +18,10 @@ import static org.mockito.Mockito.*;
 
 
 class ViewBookInfoServletTest {
+
     ViewBookInfoServlet viewBookInfoServlet = new ViewBookInfoServlet();
     StringWriter writer = new StringWriter();
+
     @Mock
     HttpServletResponse response;
 
@@ -48,6 +49,7 @@ class ViewBookInfoServletTest {
     //Test Case 2
     @Test
     void processRequestTest2() throws IOException, ServletException {
+
         when(request.getParameter("bookId")).thenReturn("1");
         when(request.getParameter("accountId")).thenReturn("21");
         when(response.getWriter()).thenReturn(new PrintWriter(writer));
@@ -60,6 +62,7 @@ class ViewBookInfoServletTest {
     //Test Case 3
     @Test
     void processRequestTest3() throws IOException, ServletException {
+
         when(request.getParameter("bookId")).thenReturn("3");
         when(request.getParameter("accountId")).thenReturn("21");
         when(response.getWriter()).thenReturn(new PrintWriter(writer));
@@ -72,6 +75,7 @@ class ViewBookInfoServletTest {
     //Test Case 4
     @Test
     void processRequestTest4() throws IOException, ServletException {
+
         when(request.getParameter("bookId")).thenReturn("4");
         when(request.getParameter("accountId")).thenReturn("21");
         when(response.getWriter()).thenReturn(new PrintWriter(writer));
@@ -83,17 +87,32 @@ class ViewBookInfoServletTest {
 
     @Test
     void processRequestTest5() throws IOException, ServletException {
+        request = mock(HttpServletRequest.class);
+        response = mock(HttpServletResponse.class);
         when(request.getParameter("bookId")).thenReturn("28");
         when(request.getParameter("accountId")).thenReturn("21");
         when(response.getWriter()).thenReturn(new PrintWriter(writer));
         viewBookInfoServlet.processRequest(request, response);
         assertEquals("{\"isFollow\":true,\"isBookmarked\":false}",
                 writer.toString());
+    }
+    @Test
+    void processRequestTest6() throws IOException, ServletException {
+        when(request.getParameter("bookId")).thenReturn("16");
+        when(request.getParameter("accountId")).thenReturn("0");
+        when(response.getWriter()).thenReturn(new PrintWriter(writer));
+        viewBookInfoServlet.processRequest(request, response);
+        assertEquals("{\"isFollow\":false,\"isBookmarked\":false}",
+                writer.toString());
 
-    }//Test Case 7
+    }
+    //Test Case 7
+
 
     @Test
     void processRequestTest7() throws IOException, ServletException {
+
+
         when(request.getParameter("bookId")).thenReturn("24");
         when(request.getParameter("accountId")).thenReturn("21");
         when(response.getWriter()).thenReturn(new PrintWriter(writer));

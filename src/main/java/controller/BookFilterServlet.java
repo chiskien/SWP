@@ -65,7 +65,6 @@ public class BookFilterServlet extends HttpServlet {
             request.setAttribute("data", lsBook);
             request.setAttribute("filterCategory", filterCategory);
             request.setAttribute("lsCategory", lsCategory);
-
             request.getRequestDispatcher("bookFilter.jsp").forward(request, response);
         } catch (Exception ex) {
 

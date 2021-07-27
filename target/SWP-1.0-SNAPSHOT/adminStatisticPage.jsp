@@ -1,12 +1,19 @@
+<%@ page import="entity.Book" %>
+<%@ page import="java.util.List" %>
+<%@ page import="entity.Translator" %>
 <!doctype html>
 <html>
 <head>
-    <title>Makisu ~ CSS 3D Dropdown Concept</title>
+    <title>Makisu</title>
     <link href='http://fonts.googleapis.com/css?family=Days+One' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="asset/css/adminStatisticPage.css">
 </head>
 <body style="background-image: url('asset/img/adminStatisticPage.jpg')">
-
+<% List<Book> bookView = (List<Book>) request.getAttribute("bookView");
+    List<Book> bookFav = (List<Book>) request.getAttribute("bookFav");
+    List<Translator> translators = (List<Translator>) request.getAttribute("translator");
+%>
+<c:if test="${sessionScope.role==3}">
     <header class="header">
         <hgroup>
             <h1 style='color:#ff6699; font-size: 300%;'>Bromics</h1>
@@ -18,47 +25,31 @@
 
         <dl class="list nigiri">
             <dt>Most View Books</dt>
-            <dd><a href="#">Maguro</a></dd>
-            <dd><a href="#">Sake</a></dd>
-            <dd><a href="#">Unagi</a></dd>
-            <dd><a href="#">Buri</a></dd>
-            <dd><a href="#">Suzuki</a></dd>
-            <dd><a href="#">Saba</a></dd>
-            <dd><a href="#">Iwashi</a></dd>
-            <dd><a href="#">Kohada</a></dd>
-            <dd><a href="#">Hirame</a></dd>
-            <dd><a href="#">Tobiwo</a></dd>
-        </dl>
+            <% for (Book b : bookView) {%>
+            <dd><a href="BookDetailServlet?id=<%=b.getId()%>">
+                <%=b.getName()%>
+            </a></dd>
 
+            <%}%>
+        </dl>
         <dl class="list maki">
-            <dt>Most Favourite Books</dt>
-            <dd><a href="#">Ana-kyu</a></dd>
-            <dd><a href="#">Chutoro</a></dd>
-            <dd><a href="#">Kaiware</a></dd>
-            <dd><a href="#">Kampyo</a></dd>
-            <dd><a href="#">Kappa</a></dd>
-            <dd><a href="#">Natto</a></dd>
-            <dd><a href="#">Negitoro</a></dd>
-            <dd><a href="#">Oshinko</a></dd>
-            <dd><a href="#">Otoro</a></dd>
-            <dd><a href="#">Tekka</a></dd>
+            <dt>Most Followings Books</dt>
+            <% for (Book b : bookFav) {%>
+            <dd><a href="BookDetailServlet?id=<%=b.getId()%>">
+                <%=b.getName()%>
+            </a></dd>
+            <%}%>
         </dl>
 
         <dl class="list sashimi">
             <dt style="overflow:hidden">Most FavouritePublisher</dt>
-            <dd><a href="#">Maguro</a></dd>
-            <dd><a href="#">Toro</a></dd>
-            <dd><a href="#">Ebi</a></dd>
-            <dd><a href="#">Saba</a></dd>
-            <dd><a href="#">Ika</a></dd>
-            <dd><a href="#">Tako</a></dd>
-            <dd><a href="#">Tomago</a></dd>
-            <dd><a href="#">Kani</a></dd>
-            <dd><a href="#">Katsuo</a></dd>
-            <dd><a href="#">Maguro</a></dd>
+            <% for (Translator t : translators ) {%>
+            <dd>
+                <%=t.getName()%>
+            </dd>
+            <%}%>
         </dl>
-
-        <a href="/ChartController" class="" style='box-shadow: 0 1px 4px rgb(0 0 0 / 15%);
+        <a href="ChartController" class="" style='box-shadow: 0 1px 4px rgb(0 0 0 / 15%);
            z-index: 1000;
     border-radius: 3px;
     text-transform: uppercase;
@@ -75,65 +66,62 @@
     width: 140px;
     color: #fff;
     left: 50%;'>To Charts</a>
-
     </section>
+</c:if>
 
-   
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<script src="asset/js/adminStatisticPage.js"></script>
+<script>
 
+    // The `enabled` flag will be `false` if CSS 3D isn't available
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-    <script src="asset/js/adminStatisticPage.js"></script>
-    <script>
+    if ($.fn.makisu.enabled) {
 
-        // The `enabled` flag will be `false` if CSS 3D isn't available
+        var $sashimi = $('.sashimi');
+        var $nigiri = $('.nigiri');
+        var $maki = $('.maki');
 
-        if ( $.fn.makisu.enabled ) {
+        // Create Makisus
 
-            var $sashimi = $( '.sashimi' );
-            var $nigiri = $( '.nigiri' );
-            var $maki = $( '.maki' );
+        $nigiri.makisu({
+            selector: 'dd',
+            overlap: 0.85,
+            speed: 1.7
+        });
 
-            // Create Makisus
+        $maki.makisu({
+            selector: 'dd',
+            overlap: 0.6,
+            speed: 0.85
+        });
 
-            $nigiri.makisu({
-                selector: 'dd',
-                overlap: 0.85,
-                speed: 1.7
-            });
+        $sashimi.makisu({
+            selector: 'dd',
+            overlap: 0.2,
+            speed: 0.5
+        });
 
-            $maki.makisu({
-                selector: 'dd',
-                overlap: 0.6,
-                speed: 0.85
-            });
+        // Open all
 
-            $sashimi.makisu({
-                selector: 'dd',
-                overlap: 0.2,
-                speed: 0.5
-            });
+        $('.list').makisu('open');
 
-            // Open all
-            
-            $( '.list' ).makisu( 'open' );
+        // Toggle on click
 
-            // Toggle on click
+        $('.toggle').on('click', function () {
+            $('.list').makisu('toggle');
+        });
 
-            $( '.toggle' ).on( 'click', function() {
-                $( '.list' ).makisu( 'toggle' );
-            });
+        // Disable all links
 
-            // Disable all links
+        $('.demo a').click(function (event) {
+            event.preventDefault();
+        });
 
-            $( '.demo a' ).click( function( event ) {
-                event.preventDefault();
-            });
+    } else {
 
-        } else {
+        $('.warning').show();
+    }
 
-            $( '.warning' ).show();
-        }
-
-    </script>
+</script>
 </body>
 </html>

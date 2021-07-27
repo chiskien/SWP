@@ -36,8 +36,8 @@ public class UserDeleteHistoryServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             int bookId = Integer.parseInt(request.getParameter("bookId"));
             int accountId = Integer.parseInt(request.getParameter("accountId"));
-            
-            new HistoryDao().delete(bookId, accountId);
+            HistoryDao dao = new HistoryDao();
+             dao.delete(bookId, accountId);
             
             response.sendRedirect("UserHistoryServlet?accountId="+accountId);
         }

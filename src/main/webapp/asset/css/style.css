@@ -74,7 +74,7 @@ header a {
 }
 .header-wrapper .dropdown-menu li a {
   color: #777;
-  padding: 8px 20px;
+  padding: 8px 10px;
   line-height: normal;
 }
 .header-wrapper .dropdown-menu li a:hover,

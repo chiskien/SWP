@@ -46,12 +46,15 @@ class BookFilterServletTest {
     void processRequest() throws ServletException, IOException {
         String path = "error.jsp";
         when(request.getParameter("status")).thenReturn("Break");
+
         String[] cate = {"Anime", "Shonen","Isekai"};
         when(request.getParameterValues("categories")).thenReturn(cate);
         when(request.getRequestDispatcher(path)).thenReturn(dispatcher);
         when(request.getParameter("Sort")).thenReturn("A-Z");
         filterServlet.processRequest(request,response);
         verify(response).sendRedirect(path);
+        // ko
+
     }
     @Test
     void processRequest2() throws ServletException, IOException {
@@ -62,7 +65,6 @@ class BookFilterServletTest {
         when(request.getRequestDispatcher(path)).thenReturn(dispatcher);
         when(request.getParameter("Sort")).thenReturn("A-Z");
         filterServlet.processRequest(request,response);
-
         verify(request).getRequestDispatcher(path);
         verify(dispatcher).forward(request,response);
     }

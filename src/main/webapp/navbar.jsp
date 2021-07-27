@@ -10,7 +10,7 @@
                     <li><a href="BookServlet" class="off">Home</a></li>
                     <li class="dropdown">
                         <a href="" class="dropdown-toggle off" data-toggle="dropdown"
-                           >Categories</a
+                        >Categories</a
                         >
                         <ul class="dropdown-menu container">
                             <div class="row">
@@ -18,9 +18,9 @@
                                     <div class="col-md-2">
                                         <li>
                                             <a
-                                                class="dropdown-item"
-                                                href="BookWithCategoryServlet?categoryId=${category.categoryId}"
-                                                >${category.categoryName}</a
+                                                    class="dropdown-item"
+                                                    href="BookWithCategoryServlet?categoryId=${category.categoryId}"
+                                            >${category.categoryName}</a
                                             >
                                         </li>
                                     </div>
@@ -33,19 +33,22 @@
                     </li>
                     <li>
                         <a onclick="toggleNotification()"
-                           ><div class="btn-notification" style="position: absolute; margin-left: 17%">
+                        >
+                            <div class="btn-notification" style="position: absolute; margin-left: 17%">
                                 <i class="fa fa-bell" style="font-size: 30px; color: white;"></i></div
-                            ></a>
+                            >
+                        </a>
                         <div class="notifi-box" id="box">
                             <h2>Notification</h2>
-                            <c:forEach items="${requestScope.lsNotification}" var = "noti">
+                            <c:forEach items="${requestScope.lsNotification}" var="noti">
                                 <div class="notifi-item">
-                                <img src="https://p.kindpng.com/picc/s/78-785827_user-profile-avatar-login-account-male-user-icon.png" alt="img">
-                                <div class="text">
-                                    <h4>Test Name</h4>
-                                    <p>${noti.content}</p>
+                                    <img src="https://p.kindpng.com/picc/s/78-785827_user-profile-avatar-login-account-male-user-icon.png"
+                                         alt="img">
+                                    <div class="text">
+                                        <h4>Test Name</h4>
+                                        <p>${noti.content}</p>
+                                    </div>
                                 </div>
-                            </div>
                             </c:forEach>
                         </div>
                     </li>
@@ -74,19 +77,19 @@
             </script>
 
             <form
-                action="BookSearchServlet"
-                method="GET"
-                class="navbar-form form-inline"
-                style="display: inline-block"
-                >
+                    action="BookSearchServlet"
+                    method="GET"
+                    class="navbar-form form-inline"
+                    style="display: inline-block"
+            >
                 <div class="input-group search-box">
                     <input
-                        type="text"
-                        id="search"
-                        class="form-control"
-                        placeholder="Search for book"
-                        name="search"
-                        />
+                            type="text"
+                            id="search"
+                            class="form-control"
+                            placeholder="Search for book"
+                            name="search"
+                    />
                     <button class="input-group-addon" type="submit">
                         <i class="fa fa-search" style="font-size: 27px"></i>
                     </button>
@@ -96,31 +99,31 @@
                 <c:when test="${sessionScope.user != null}">
                     <div class="dropdown" style="display: inline-block">
                         <a
-                            href=""
-                            class="login dropdown-toggle user-action"
-                            data-toggle="dropdown"
-                            >
-                            ${sessionScope.user} <b class="carpet"></b>
+                                href=""
+                                class="login dropdown-toggle user-action"
+                                data-toggle="dropdown"
+                        >
+                                ${sessionScope.user} <b class="carpet"></b>
                         </a>
                         <ul class="dropdown-menu" style="width: 100px">
                             <li>
                                 <a
-                                    href="UserProfileServlet?accountId=${sessionScope.accountId}"
-                                    >
+                                        href="UserProfileServlet?accountId=${sessionScope.accountId}"
+                                >
                                     <i class="fa fa-user"></i> Profile</a
                                 >
                             </li>
                             <li>
                                 <a
-                                    href="UserBookMarkServlet?accountId=${sessionScope.accountId}"
-                                    >
+                                        href="UserBookMarkServlet?accountId=${sessionScope.accountId}"
+                                >
                                     <i class="fa fa-bookmark"></i> Book Mark</a
                                 >
                             </li>
                             <li>
                                 <a
-                                    href="UserHistoryServlet?accountId=${sessionScope.accountId}"
-                                    >
+                                        href="UserHistoryServlet?accountId=${sessionScope.accountId}"
+                                >
                                     <i class="fa fa-history"></i> Recently</a
                                 >
                             </li>
@@ -130,18 +133,24 @@
                                 >
                             </li>
                             <c:if test="${sessionScope.role==3}">
-                            <li>
-                                <a href="ChartController">
-                                    Switch to admin</a
-                                >
-                            </li>
+                                <li>
+                                    <a href="StatisticServlet?role=${sessionScope.role}" >
+                                        <i class="fa fa-bar-chart"></i> ViewStatistic</a
+                                    >
+                                </li>
+                                <li>
+                                    <a href="ChartController">
+                                        Switch to admin</a
+                                    >
+                                </li>
+
                             </c:if>
                             <c:if test="${sessionScope.role==2}">
-                            <li>
-                                <a href="ChartController">
-                                    Switch to admin</a
-                                >
-                            </li>
+                                <li>
+                                    <a href="ChartController">
+                                        Switch to admin</a
+                                    >
+                                </li>
                             </c:if>
                             <li class="divider"></li>
                             <li><a href="LogoutServlet">Log Out</a></li>
@@ -158,8 +167,8 @@
     </div>
     <script src="asset/js/popper.js"></script>
     <script type="text/javascript">
-                $(".off").click(function () {
-                    $(this).toggleClass("on");
-                });
+        $(".off").click(function () {
+            $(this).toggleClass("on");
+        });
     </script>
 </header>

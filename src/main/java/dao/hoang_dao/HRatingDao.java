@@ -60,9 +60,7 @@ public class HRatingDao {
             ps.setInt(1, bookId);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
-                System.out.println(rs.getDouble("avg")/rs.getDouble("count")*100);
-                double a = ((double)(Math.round(rs.getDouble("avg")/rs.getDouble("count")*100)))/100;
-                return a;
+                return ((double)(Math.round(rs.getDouble("avg")/rs.getDouble("count")*100)))/100;
             }
             else return 0;
         } catch (SQLException ex) {

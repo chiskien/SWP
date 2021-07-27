@@ -39,7 +39,6 @@ public class UpdateRateServlet extends HttpServlet {
             int mark = Integer.parseInt(request.getParameter("mark"));
             new HRatingDao().updateRating(accountId, bookId, mark);
             double a = new HRatingDao().getMark(bookId);
-            System.out.println(a);
             out.print(a);
         }
     }

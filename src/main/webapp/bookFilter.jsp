@@ -96,11 +96,13 @@
                                 <h5 style="color: #292926 !important">${book.name}</h5>
                               </a>
                             </div>
-                            <a href="BookDetailServlet?id=${book.id}"
-                            ><button class="book-action3 b1">
+
+                            <a href="BookDetailServlet?id=${book.id}">
+                              <button class="book-action3 b1" type="button">
                               View Detail
-                            </button></a
-                            >
+                              </button>
+                            </a>
+
                           </div>
                         </div>
                       </div>

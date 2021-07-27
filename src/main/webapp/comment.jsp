@@ -59,6 +59,7 @@
     <c:forEach items="${requestScope.lsComment}" var="comment">
       <div id="new-comment" class="col-md-12"></div>
       <div class="col-md-12">
+        <c:if test="${sessionScope.user!=null}">
         <button
           type="button"
           class="btn btn-danger dropdown-toggle delete2"
@@ -99,6 +100,7 @@
             </a>
           </div>
         </div>
+        </c:if>
         <div class="media g-mb-30 media-comment">
           <img
             class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15"

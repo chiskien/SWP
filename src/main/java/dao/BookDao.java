@@ -11,6 +11,7 @@ import entity.Book;
 import entity.Category;
 import entity.Chapter;
 import entity.Product;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,10 +19,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 import jdbc.SQLServerConnection;
 
 /**
- *
  * @author hoang
  */
 public class BookDao implements IMethod<Book> {
@@ -34,7 +35,7 @@ public class BookDao implements IMethod<Book> {
         ArrayList<String> ls = new ArrayList();
         String query = "Select name from book";
         try (Connection con = SQLServerConnection.GetConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+             PreparedStatement ps = con.prepareStatement(query)) {
             rs = ps.executeQuery();
             while (rs.next()) {
                 ls.add(rs.getString("name"));
@@ -45,11 +46,12 @@ public class BookDao implements IMethod<Book> {
         }
         return null;
     }
-    public Integer getRate(int bookId){
+
+    public Integer getRate(int bookId) {
 
         String query = "Select avg(mark) as mark from rating where bookId = ?";
         try (Connection con = SQLServerConnection.GetConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+             PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, bookId);
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -60,11 +62,12 @@ public class BookDao implements IMethod<Book> {
         }
         return null;
     }
-    public ArrayList<String> getAllAuthor(){
+
+    public ArrayList<String> getAllAuthor() {
         ArrayList<String> ls = new ArrayList();
         String query = "Select name from book";
         try (Connection con = SQLServerConnection.GetConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+             PreparedStatement ps = con.prepareStatement(query)) {
             rs = ps.executeQuery();
             while (rs.next()) {
                 ls.add(rs.getString("name"));
@@ -76,12 +79,12 @@ public class BookDao implements IMethod<Book> {
         return null;
     }
 
-    public List<Book> getAllWithTranslator(int translatorId){
+    public List<Book> getAllWithTranslator(int translatorId) {
         List<Book> ls = new ArrayList();
         String query = "Select * from book where translatorId = ?";
         try (Connection con = SQLServerConnection.GetConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1,translatorId);
+             PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, translatorId);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Book pro = Book.builder()
@@ -96,12 +99,13 @@ public class BookDao implements IMethod<Book> {
         }
         return null;
     }
+
     @Override
     public List<Book> getAll() {
         List<Book> ls = new ArrayList();
         String query = "Select * from book";
         try (Connection con = SQLServerConnection.GetConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+             PreparedStatement ps = con.prepareStatement(query)) {
             rs = ps.executeQuery();
             while (rs.next()) {
                 Book pro = Book.builder()
@@ -130,7 +134,7 @@ public class BookDao implements IMethod<Book> {
         String query = "SELECT * FROM book a, book_category b "
                 + "WHERE a.id = b.bookId and b.categoryId = ?   ";
         try (Connection cn = SQLServerConnection.GetConnection();
-                PreparedStatement ps = cn.prepareStatement(query)) {
+             PreparedStatement ps = cn.prepareStatement(query)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             List<Book> ls = new ArrayList();
@@ -160,7 +164,7 @@ public class BookDao implements IMethod<Book> {
     public Book getOne(int id) {
         String query = "SELECT * FROM book WHERE id = ? ";
         try (Connection cn = SQLServerConnection.GetConnection();
-                PreparedStatement ps = cn.prepareStatement(query)) {
+             PreparedStatement ps = cn.prepareStatement(query)) {
             ps.setInt(1, id);
             rs = ps.executeQuery();
 
@@ -185,10 +189,11 @@ public class BookDao implements IMethod<Book> {
         }
         return null;
     }
-    public Book getOneWithName(String name){
+
+    public Book getOneWithName(String name) {
         String query = "SELECT * FROM book WHERE name = ? ";
         try (Connection cn = SQLServerConnection.GetConnection();
-                PreparedStatement ps = cn.prepareStatement(query)) {
+             PreparedStatement ps = cn.prepareStatement(query)) {
             ps.setString(1, name);
             rs = ps.executeQuery();
 
@@ -217,7 +222,7 @@ public class BookDao implements IMethod<Book> {
         String query = "INSERT INTO book(name,authorId,translatorId,status,description,imgName) VALUES (?,?,?,?,?,?)";
         int check = 0;
         try (Connection cn = SQLServerConnection.GetConnection();
-                PreparedStatement ps = cn.prepareStatement(query)) {
+             PreparedStatement ps = cn.prepareStatement(query)) {
             ps.setObject(1, obj.getName());
             ps.setObject(2, obj.getAuthorId());
             ps.setObject(3, obj.getTranslatorId());
@@ -237,7 +242,7 @@ public class BookDao implements IMethod<Book> {
         String query = "DELETE FROM book WHERE id = ?";
         int check = 0;
         try (Connection cn = SQLServerConnection.GetConnection();
-                PreparedStatement ps = cn.prepareStatement(query)) {
+             PreparedStatement ps = cn.prepareStatement(query)) {
             ps.setInt(1, id);
             check = ps.executeUpdate();
         } catch (SQLException ex) {
@@ -257,7 +262,7 @@ public class BookDao implements IMethod<Book> {
                 + "WHERE id = ?";
         int check = 0;
         try (Connection cn = SQLServerConnection.GetConnection();
-                PreparedStatement ps = cn.prepareStatement(query)) {
+             PreparedStatement ps = cn.prepareStatement(query)) {
             ps.setObject(1, obj.getName());
             ps.setObject(2, obj.getAuthorId());
             ps.setObject(3, obj.getTranslatorId());
@@ -272,7 +277,8 @@ public class BookDao implements IMethod<Book> {
         }
         return check > 0;
     }
-    public boolean update2(int id,String name, int translatorId,String description,String imgName){
+
+    public boolean update2(int id, String name, int translatorId, String description, String imgName) {
         String query = "UPDATE book SET "
                 + "name = ?, "
                 + "translatorId = ?, "
@@ -281,20 +287,20 @@ public class BookDao implements IMethod<Book> {
                 + "WHERE id = ?";
         int check = 0;
         try (Connection cn = SQLServerConnection.GetConnection();
-                PreparedStatement ps = cn.prepareStatement(query)) {
+             PreparedStatement ps = cn.prepareStatement(query)) {
             ps.setObject(1, name);
             ps.setObject(2, translatorId);
             ps.setObject(3, description);
-            ps.setObject(4,imgName);
+            ps.setObject(4, imgName);
             ps.setObject(5, id);
-            
+
 
             check = ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
 
-        return check>0;
+        return check > 0;
     }
 
     public List<Book> getAllWithIds(int[] ids) {
@@ -302,7 +308,7 @@ public class BookDao implements IMethod<Book> {
         for (int id : ids) {
             String query = "SELECT * FROM book WHERE id = ?";
             try (Connection cn = SQLServerConnection.GetConnection();
-                    PreparedStatement ps = cn.prepareStatement(query)) {
+                 PreparedStatement ps = cn.prepareStatement(query)) {
                 ps.setInt(1, id);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
@@ -331,10 +337,10 @@ public class BookDao implements IMethod<Book> {
     }
 
     public List<Book> getTopView() {
-        String query = "SELECT TOP 10 * FROM book\n"
+        String query = "SELECT TOP 12 * FROM book\n"
                 + "ORDER BY totalView desc";
         try (Connection cn = SQLServerConnection.GetConnection();
-                PreparedStatement ps = cn.prepareStatement(query)) {
+             PreparedStatement ps = cn.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
             List<Book> ls = new ArrayList();
             while (rs.next()) {
@@ -408,7 +414,7 @@ public class BookDao implements IMethod<Book> {
 
         query += subQuerySort;
         try (Connection cn = SQLServerConnection.GetConnection();
-                PreparedStatement ps = cn.prepareStatement(query)) {
+             PreparedStatement ps = cn.prepareStatement(query)) {
             int count = 1;
             for (int i = 0; i < filterCategory.size(); i++) {
                 System.out.println(filterCategory.get(i).getCategoryId());
@@ -445,7 +451,7 @@ public class BookDao implements IMethod<Book> {
     public String getLatestUpdateWithBookId(int id) {
         Chapter latestChapter = new ChapterDao().getLatestChapterWithBookId(id);
         Calendar latestChapterDate = Calendar.getInstance();
-        if(latestChapter!=null){
+        if (latestChapter != null) {
             latestChapterDate = latestChapter.getDateOfPublic();
         }
         Calendar cur = Calendar.getInstance();
@@ -478,11 +484,12 @@ public class BookDao implements IMethod<Book> {
         return "New!!";
 
     }
+
     public ArrayList<Book> getAllWithName(String name) {
         String query = "SELECT * FROM book "
                 + "WHERE name LIKE ?";
         try (Connection cn = SQLServerConnection.GetConnection();
-                PreparedStatement ps = cn.prepareStatement(query)) {
+             PreparedStatement ps = cn.prepareStatement(query)) {
             ps.setObject(1, "%" + name + "%");
             ResultSet rs = ps.executeQuery();
             ArrayList<Book> arr = new ArrayList();
@@ -509,12 +516,12 @@ public class BookDao implements IMethod<Book> {
         }
         return null;
     }
-    
+
     public List<Book> getAllWithTranslatorId(int id) {
         String query = "SELECT * FROM book  "
                 + "WHERE translatorId = ?";
         try (Connection cn = SQLServerConnection.GetConnection();
-                PreparedStatement ps = cn.prepareStatement(query)) {
+             PreparedStatement ps = cn.prepareStatement(query)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             List<Book> ls = new ArrayList();
@@ -544,7 +551,7 @@ public class BookDao implements IMethod<Book> {
     public Integer getIdWithName(String name) {
         String query = "SELECT top(1) id from book WHERE name = ?";
         try (Connection cn = SQLServerConnection.GetConnection();
-                PreparedStatement ps = cn.prepareStatement(query)) {
+             PreparedStatement ps = cn.prepareStatement(query)) {
             ps.setObject(1, name);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -562,7 +569,7 @@ public class BookDao implements IMethod<Book> {
                 + "order by max desc,b.id desc";
         ArrayList<Book> ls = new ArrayList();
         try (Connection con = SQLServerConnection.GetConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+             PreparedStatement ps = con.prepareStatement(query)) {
             rs = ps.executeQuery();
             while (rs.next()) {
                 Book pro = Book.builder()
@@ -593,7 +600,7 @@ public class BookDao implements IMethod<Book> {
                 + "group by b.authorId,b.description,b.id,b.imgName,b.name,b.status,b.totalChap,b.appear,b.totalView,b.translatorId\n"
                 + "order by max desc,b.id desc OFFSET ? ROWS FETCH NEXT ? ROW ONLY";
         try (Connection cn = SQLServerConnection.GetConnection();
-                PreparedStatement ps = cn.prepareStatement(query)) {
+             PreparedStatement ps = cn.prepareStatement(query)) {
             ps.setObject(1, (pageNum - 1) * bookNum);
             ps.setObject(2, bookNum);
             ResultSet rs = ps.executeQuery();
@@ -667,10 +674,9 @@ public class BookDao implements IMethod<Book> {
 
         query += subQuerySort;
         try (Connection cn = SQLServerConnection.GetConnection();
-                PreparedStatement ps = cn.prepareStatement(query)) {
+             PreparedStatement ps = cn.prepareStatement(query)) {
             int count = 1;
             for (int i = 0; i < filterCategory.size(); i++) {
-                System.out.println(filterCategory.get(i).getCategoryId());
                 ps.setInt(i + 1, filterCategory.get(i).getCategoryId());
                 count++;
             }
@@ -700,24 +706,54 @@ public class BookDao implements IMethod<Book> {
         }
         return null;
     }
-    public boolean changeBookAppear(int id){
+
+    public boolean changeBookAppear(int id) {
         String query = "UPDATE book SET appear = ? WHERE id = ?";
         int check = 0;
-        try(Connection cn = SQLServerConnection.GetConnection();
-                PreparedStatement ps = cn.prepareStatement(query)){
+        try (Connection cn = SQLServerConnection.GetConnection();
+             PreparedStatement ps = cn.prepareStatement(query)) {
             ps.setObject(2, id);
             Book temp = new BookDao().getOne(id);
-            if(temp.getAppear()== 0){
+            if (temp.getAppear() == 0) {
                 ps.setObject(1, 1);
-            }
-            else if(temp.getAppear() ==1){
+            } else if (temp.getAppear() == 1) {
                 ps.setObject(1, 0);
             }
             check = ps.executeUpdate();
-        }
-        catch(SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return check >0;
+        return check > 0;
     }
+
+    public List<Book> getMostFollowingBook() {
+        String query = "SELECT bookId,b.name,count(*) as NumberOfFollowers from following join book b on b.id = following.bookId " +
+                "group by bookId,b.name order by NumberOfFollowers desc ";
+        List<Book> list = new ArrayList<>();
+        try (Connection cn = SQLServerConnection.GetConnection()) {
+            assert cn != null;
+            PreparedStatement ps = cn.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Book b = Book.builder().
+                        id(rs.getInt(1)).
+                        name(rs.getString(2)).
+                        totalFollow(rs.getInt(3)).
+                        build();
+                list.add(b);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return list;
+    }
+//    public static void main(String[] args) {
+//        BookDao dao = new BookDao();
+//        List<Book> list = dao.getMostFollowingBook();
+//        for (Book b : list) {
+//            System.out.println(b.getId()+" - " + b.getName()+" - "+b.getTotalFollow());
+//        }
+//    }
 }
+

@@ -50,9 +50,7 @@ class BookDetailServletTest {
         when(request.getParameter("id")).thenReturn("1");
         when(session.getAttribute("accountId")).thenReturn(21);
         when(request.getRequestDispatcher(path)).thenReturn(dispatcher);
-
         bookDetailServlet.processRequest(request, response);
-
         verify(request, times(1)).getRequestDispatcher(path);
         verify(dispatcher).forward(request, response);
     }
@@ -63,9 +61,7 @@ class BookDetailServletTest {
         when(request.getParameter("id")).thenReturn("1");
         when(session.getAttribute("accountId")).thenReturn(0);
         when(request.getRequestDispatcher(path)).thenReturn(dispatcher);
-
         bookDetailServlet.processRequest(request, response);
-
         verify(request, times(1)).getRequestDispatcher(path);
         verify(dispatcher).forward(request, response);
     }
@@ -85,8 +81,6 @@ class BookDetailServletTest {
         boolean isFollowed = FollowDao.getFollowOrNot(id, accountId);
         Translator translator = new TranslatorDao().getOneWithBookId(id);
         List<Book> lsBookWithTranslator = new BookDao().getAllWithTranslatorId(translator.getTranslatorId());
-
-
         assertNotNull(listCategories);
         assertNotNull(lsChapter);
         assertNotNull(lsComment);

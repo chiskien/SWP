@@ -41,7 +41,6 @@ public class LoginServlet extends HttpServlet {
             String pass = request.getParameter("password");
             Account acc = new AccountDao().login(mail, pass);
 
-            System.out.println(mail);
             if (acc != null) {
 
                 if (acc.getStatus() == 2) {

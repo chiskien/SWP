@@ -73,7 +73,7 @@ public class BookDetailServlet extends HttpServlet {
             request.setAttribute("lsBookWithTranslator",lsBookWithTranslator);
             request.setAttribute("isFollow", isFollow);
             request.getRequestDispatcher("bookDetail.jsp").forward(request, response);
-        }
+        }//ko bt test =))
         catch(Exception e){
             e.printStackTrace();
         }

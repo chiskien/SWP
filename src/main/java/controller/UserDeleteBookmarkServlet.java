@@ -35,9 +35,7 @@ public class UserDeleteBookmarkServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             int accountId = Integer.parseInt(request.getParameter("accountId"));
-        int bookId = Integer.parseInt(request.getParameter("bookId")); 
-
-
+        int bookId = Integer.parseInt(request.getParameter("bookId"));
         response.getWriter().print(HBookMarkDao.addBookMark(bookId, 0, accountId, -1));
         
         response.sendRedirect("UserBookMarkServlet?accountId="+accountId);
