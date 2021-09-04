@@ -9,6 +9,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
+
 import dao.AccountDao;
 import dao.BookDao;
 import dao.CategoryDao;
@@ -29,15 +30,16 @@ import entity.Frame;
 import entity.History;
 import entity.Product;
 import entity.Translator;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 import tool.SendEmail;
 
 /**
- *
  * @author hoang
  */
 public class Main {
@@ -55,6 +57,7 @@ public class Main {
             System.out.println(a.delete());
         }
     }
+
     private final String MAIL = "hoangdthe153200@fpt.edu.vn";
     private final String PASSWORD = "hoanglotu123";
 
@@ -91,16 +94,16 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-            
+
 //                List<Category> lsCategory = new CategoryDao().getAll();
 //                for(Category c:lsCategory){
 //                    System.out.println(c);
 //                }
 //         System.out.println(FollowDao.addFollow(16, 3, -1));
-List<Book> book = new BookDao().getAllWithTranslatorId(3);
-for(Book b :book){
-    System.out.println(b);
-}
+        List<Book> book = new BookDao().getAllWithTranslatorId(3);
+        for (Book b : book) {
+            System.out.println(b);
+        }
 //        System.out.println(new BookDao().update2(1, "Onepiece", 3, "Câu chuyện kể về một chuyến phiêu lưu giữa các vùng biển của các hải tặc Mũ rơm trẻ tuổi, mục tiêu là quần đảo cuối cùng có tên Laugh tale. Đây là một hành trình khám phá những miền đất vô tận.", "ji"));
 //        List<Category> a = new ArrayList();
 //        a.add(new CategoryDao().getOne(3));

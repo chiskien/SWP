@@ -21,7 +21,6 @@ import jdbc.SQLServerConnection;
 public class TReportDao {
 
     ResultSet rs;
-
     //get all report information
     public List<Report> getAll() {
         List<Report> list = new ArrayList<Report>();
